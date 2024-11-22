@@ -11,7 +11,6 @@ import java.net.Socket;
 public class Client {
     private final String serverAddress;
     private final int serverPort;
-    private final boolean isNicknameSet = false;
     private JFrame frame;
     private JTextArea messageArea;
     private JTextField inputField;

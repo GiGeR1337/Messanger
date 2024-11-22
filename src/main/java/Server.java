@@ -93,9 +93,9 @@ public class Server {
 
                 if (!exceptions.contains(recipientName)) {
                     if (recipientName.equals(sender.getClientName())) {
-                        sender.sendMessage("[Me]: To: [Everyone] except: " + exceptions + " >> " + message);
+                        sender.sendMessage("[Me]: To: [Everyone] Except: " + exceptions + " >> " + message);
                     } else {
-                        entry.getValue().sendMessage("From: [" + sender.getClientName() + "] To: [Everyone] except: " + exceptions + " >> " + message);
+                        entry.getValue().sendMessage("From: [" + sender.getClientName() + "] To: [Everyone] Except: " + exceptions + " >> " + message);
                     }
                 }
             }
