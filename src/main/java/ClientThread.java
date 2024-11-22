@@ -47,17 +47,23 @@ public class ClientThread extends Thread {
             out.println("All clients connected right now: " + server.getClientNames());
             out.println("====================================================");
             out.println("To send a message use: /s <recipient(s)> <message>");
+            out.println("Use: /c for listing all commands");
+            out.println("====================================================");
 
             String message;
             while ((message = in.readLine()) != null) {
-                if (message.startsWith("/b"))
+                if (message.startsWith("/b")) {
+                    out.println("====================================================");
                     out.println("Banned phrases: " + server.getBannedPhrases());
-                else if (message.startsWith("/q")) {
+                    out.println("====================================================");
+                } else if (message.startsWith("/q")) {
                     out.println("Bye!");
                     break;
-                } else if (message.startsWith("/u"))
+                } else if (message.startsWith("/u")) {
+                    out.println("====================================================");
                     out.println("List of clients: " + server.getClientNames());
-                else if (message.startsWith("/c")) {
+                    out.println("====================================================");
+                } else if (message.startsWith("/c")) {
                     out.println("====================================================");
                     out.println("Commands: \n" +
                             "/b - Banned phrases\n" +
@@ -76,7 +82,7 @@ public class ClientThread extends Thread {
                         String content = parts[2];
                         Set<String> recipients = new HashSet<>();
                         if (recipientsRaw.equals("*")) {
-                            recipients.add("*"); // Indicate broadcast to everyone
+                            recipients.add("*");
                         } else {
                             recipients.addAll(Arrays.asList(recipientsRaw.split(",")));
                         }
