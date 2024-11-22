@@ -9,16 +9,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
+    private final String serverAddress;
+    private final int serverPort;
+    private final boolean isNicknameSet = false;
     private JFrame frame;
     private JTextArea messageArea;
     private JTextField inputField;
     private JButton sendButton;
     private Socket socket;
-    private final String serverAddress;
-    private final int serverPort;
     private BufferedReader in;
     private PrintWriter out;
-    private final boolean isNicknameSet = false;
 
     public Client() {
         this.serverAddress = "127.0.0.1";

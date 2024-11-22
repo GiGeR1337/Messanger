@@ -86,7 +86,6 @@ public class Server {
     }
 
 
-
     public void broadcastExcept(String message, ClientThread sender, Set<String> exceptions) {
         synchronized (clients) {
             for (Map.Entry<String, ClientThread> entry : clients.entrySet()) {
@@ -102,7 +101,6 @@ public class Server {
             }
         }
     }
-
 
 
     public boolean checkForBanned(String message) {

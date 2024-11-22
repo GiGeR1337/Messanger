@@ -75,43 +75,50 @@ public class ClientThread extends Thread {
                     out.println("====================================================");
                 } else if (message.startsWith("/s")) {
                     String[] parts = message.split(" ", 3);
-                    if (parts.length < 3) {
+                    if (parts.length < 3)
                         out.println("Invalid command. Usage: /s <recipient(s)> <message>");
-                    } else {
+                    else {
                         String recipientsRaw = parts[1];
                         String content = parts[2];
                         Set<String> recipients = new HashSet<>();
-                        if (recipientsRaw.equals("*")) {
+                        if (recipientsRaw.equals("*"))
                             recipients.add("*");
-                        } else {
+                        else
                             recipients.addAll(Arrays.asList(recipientsRaw.split(",")));
-                        }
 
-                        if (server.checkForBanned(content)) {
+                        if (server.checkForBanned(content))
                             server.broadcast(content, this, recipients);
-                        } else {
+                        else {
                             out.println("Message contains banned phrases and was not sent.");
                             out.println("Banned phrases: " + server.getBannedPhrases());
                         }
                     }
                 } else if (message.startsWith("/e")) {
                     String[] parts = message.split(" ", 3);
-                    if (parts.length < 3) {
+                    if (parts.length < 3)
                         out.println("Invalid command. Usage: /e <exception(s)> <message>");
-                    } else {
+                    else {
                         String exceptionsRaw = parts[1];
                         String content = parts[2];
                         Set<String> exceptions = new HashSet<>(Arrays.asList(exceptionsRaw.split(",")));
 
-                        if (server.checkForBanned(content)) {
+                        if (server.checkForBanned(content))
                             server.broadcastExcept(content, this, exceptions);
-                        } else {
+                        else {
                             out.println("Message contains banned phrases and was not sent.");
                             out.println("Banned phrases: " + server.getBannedPhrases());
                         }
                     }
-                } else
-                    out.println("Unknown command.");
+                } else {
+                    if (server.checkForBanned(message)) {
+                        Set<String> recipients = new HashSet<>();
+                        recipients.add("*");
+                        server.broadcast(message, this, recipients);
+                    } else {
+                        out.println("Message contains banned phrases and was not sent.");
+                        out.println("Banned phrases: " + server.getBannedPhrases());
+                    }
+                }
             }
         } catch (IOException e) {
             System.err.println("Error with client: " + clientName + ": " + e.getMessage());
