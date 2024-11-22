@@ -74,7 +74,7 @@ public class Client {
             //start message reader thread
             new Thread(new MessageReader()).start();
 
-            appendMessage("Connected to the server. Please enter your nickname:");
+            appendMessage("Connected to the server. Please enter your name:");
 
         } catch (IOException e) {
             appendMessage("Failed to connect: " + e.getMessage());
@@ -116,8 +116,6 @@ public class Client {
                     if (socket != null) {
                         socket.close();
                         frame.dispose();
-//                        inputField.setEnabled(false);
-//                        sendButton.setEnabled(false);
                     }
                 } catch (IOException e) {
                     appendMessage("Failed to close socket: " + e.getMessage());

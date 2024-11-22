@@ -66,20 +66,44 @@ public class Server {
     public void broadcast(String message, ClientThread sender, Set<String> recipients) {
         synchronized (clients) {
             for (Map.Entry<String, ClientThread> entry : clients.entrySet()) {
-                if (recipients.isEmpty() || recipients.contains(entry.getKey()))
-                    entry.getValue().sendMessage(sender.getClientName() + ": " + message);
+                String recipientName = entry.getKey();
+
+                if (recipients.contains("*")) {
+                    if (recipientName.equals(sender.getClientName())) {
+                        sender.sendMessage("[Me]: To: [Everyone] >> " + message);
+                    } else {
+                        entry.getValue().sendMessage("From: [" + sender.getClientName() + "] To: [Everyone] >> " + message);
+                    }
+                } else if (recipients.contains(recipientName)) {
+                    if (recipientName.equals(sender.getClientName())) {
+                        sender.sendMessage("[Me]: To: " + recipients + " >> " + message);
+                    } else {
+                        entry.getValue().sendMessage("From: [" + sender.getClientName() + "] To: " + recipients + " >> " + message);
+                    }
+                }
             }
         }
     }
 
+
+
     public void broadcastExcept(String message, ClientThread sender, Set<String> exceptions) {
         synchronized (clients) {
             for (Map.Entry<String, ClientThread> entry : clients.entrySet()) {
-                if (!exceptions.contains(entry.getKey()) && !entry.getKey().equals(sender.getClientName()))
-                    entry.getValue().sendMessage(sender.getClientName() + ": " + message);
+                String recipientName = entry.getKey();
+
+                if (!exceptions.contains(recipientName)) {
+                    if (recipientName.equals(sender.getClientName())) {
+                        sender.sendMessage("[Me]: To: [Everyone] except: " + exceptions + " >> " + message);
+                    } else {
+                        entry.getValue().sendMessage("From: [" + sender.getClientName() + "] To: [Everyone] except: " + exceptions + " >> " + message);
+                    }
+                }
             }
         }
     }
+
+
 
     public boolean checkForBanned(String message) {
         for (String phrase : bannedPhrases) {
